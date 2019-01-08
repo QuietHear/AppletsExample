@@ -1,0 +1,40 @@
+<!--index.wxml-->
+<view class="container" bind:touchstart='touchStart' bind:touchmove='touchMove' bind:touchend='touchEnd'>
+  <!--得分栏-->
+  <view class="top">
+    <view class="top-left">
+      2048
+    </view>
+    <view class="top-right">
+      <view>
+        <view>分数</view>
+        <view class="score">{{score}}</view>
+      </view>
+      <view>
+        <view>最高分数</view>
+        <view class="maxScore">{{final}}</view>
+      </view>
+      <view catch:touchstart='showSetting' catch:touchmove='showSetting' catch:touchend='showSetting'>设置</view>
+    </view>
+  </view>
+  <view class="gridPanel">
+    <!--底层背景框-->
+    <view class="grid" id="g{{item.row}}{{index%4}}" wx:for="{{cData}}" wx:for-index="index" wx:key="{{index}}"></view>
+    <!--上方数据层-->
+    <view hidden="{{item.score===0}}" class="cell n{{item.score}}" id="c{{item.row}}{{index%4}}" wx:for="{{cData}}" wx:for-index="index" wx:key="{{index}}">{{item.score}}</view>
+  </view>
+</view>
+<!--游戏结束弹窗-->
+<view class="setting-pop pop" hidden="{{setting_pop!==true}}">
+  <view bind:tap="closeSetting">X</view>
+  <button bind:tap="closeSetting">继续</button>
+  <button bind:tap="init">重新开始</button>
+  <button bind:tap="backMain">返回首页</button>
+</view>
+<!--游戏结束弹窗-->
+<view class="end-pop pop" hidden="{{end_pop!==true}}">
+  <text>游戏结束！</text>
+  <text>得分: {{score}}</text>
+  <button bind:tap="init">重新开始</button>
+  <button bind:tap="backMain">返回首页</button>
+</view>
